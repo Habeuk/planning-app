@@ -12,19 +12,16 @@
             width: 80%;
             height: 600px;
 
-
             .vuecal__header {
                 background: $wbu-color-primary;
                 color: white;
 
                 .vuecal__arrow {
-                    color: white
+                    color: white;
                 }
             }
 
             .vuecal__flex {
-                height: 100%;
-
                 ::-webkit-scrollbar {
                     width: 5px;
 

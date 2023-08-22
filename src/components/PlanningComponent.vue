@@ -1,5 +1,7 @@
 <script lang="ts">
 import VueCal from 'vue-cal'
+import PDialog from 'primevue/dialog'
+import pButton from 'primevue/button'
 import 'vue-cal/dist/vuecal.css'
 import { ref, type PropType } from 'vue'
 
@@ -34,13 +36,13 @@ export default {
       required: true
     }
   },
-  setup(props) {
-    console.log('opened')
-    // const events = ref(null)
+  emits: ["changeFormState"],
+  setup(props, {emit}) {
+    const showForm = ref(false);
     const onEventClick = (event: any, e: any) => {
-      console.log(e)
+      emit("changeFormState", true);
     }
-    return { ...props, onEventClick }
+    return { ...props,showForm, onEventClick }
   },
   components: { VueCal }
 }
