@@ -1,2 +1,39 @@
 @use './variables.scss' as *;
-@use '@stephane888/wbu-atomique/scss/wbu-ressources-clean.scss' as *;
+@use '@stephane888/wbu-atomique/scss/bootstrap-all.scss';
+@use '@stephane888/wbu-atomique/scss/atome/typography/_default.scss';
+
+.planning-container {
+    height: 100vh;
+
+    .planning-component {
+        background-color: transparent;
+
+        .vue-cal-container {
+            width: 80%;
+            height: 600px;
+
+
+            .vuecal__header {
+                background: $wbu-color-primary;
+                color: white;
+
+                .vuecal__arrow {
+                    color: white
+                }
+            }
+
+            .vuecal__flex {
+                height: 100%;
+
+                ::-webkit-scrollbar {
+                    width: 5px;
+
+                    &-thumb {
+                        background: $wbu-color-primary;
+                        border-radius: 10px 10px 10px 10px;
+                    }
+                }
+            }
+        }
+    }
+}

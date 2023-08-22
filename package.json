@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "Build": "vite build --watch --mode development  --outDir filesV2",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
