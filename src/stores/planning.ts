@@ -1,11 +1,15 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { PLConfigs } from './store-configs'
+import { PLConfigs, eventDuration } from './store-configs'
+import type {Events} from "../components/PlanningComponent.vue"
+
+
 export const usePlanningStore = defineStore('planning', () => {
+  const duration = ref(eventDuration)
   const events = ref([
     {
-      start: '2023-08-24 14:00',
-      end: '2023-08-24 16:00',
+      start: 'Wed Aug 23 2023 12:30:00 GMT+0100 (West Africa Standard Time)',
+      end: 'Wed Aug 23 2023 15:30:00 GMT+0100 (West Africa Standard Time)',
       title: 'Need to go shopping',
       icon: 'shopping_cart', // Custom attribute.
       contentFull:
@@ -24,6 +28,25 @@ export const usePlanningStore = defineStore('planning', () => {
     }
   ])
   const planningConfigs = ref(PLConfigs)
-  // console.log(typeof(PLConfigs.disableViews))
-  return {planningConfigs, events }
+
+  const addEvent=(event: Events)=>{
+    const time = {
+    StartHour: Math.floor(event.startTimeMinutes / 60),
+    EndHour: Math.floor(event.endTimeMinutes / 60),
+    startMinute: event.startTimeMinutes % 60,
+    endMinutes: event.endTimeMinutes % 60
+  }
+  event.start.setHours(time.StartHour, time.startMinute)
+  event.end.setHours(time.EndHour, time.endMinutes)
+  events.value.push({
+    start: event.start.toString(),
+    end: event.end.toString(),
+    title: 'Custom Event',
+    icon: 'shopping_cart', // Custom attribute.
+    contentFull: 'Damn content',
+    class: 'leisure',
+    monitor: ''
+  })
+  }
+  return {planningConfigs, events, duration, addEvent }
 })

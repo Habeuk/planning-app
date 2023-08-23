@@ -1,9 +1,16 @@
 <script lang="ts">
 import VueCal from 'vue-cal'
-import PDialog from 'primevue/dialog'
-import pButton from 'primevue/button'
 import 'vue-cal/dist/vuecal.css'
 import { ref, type PropType } from 'vue'
+
+interface Events {
+  startTimeMinutes: number
+  endTimeMinutes: number
+  start: Date
+  end: Date
+}
+
+export type { Events }
 
 interface Configs {
   activeView: string
@@ -14,7 +21,7 @@ interface Configs {
   timeFrom: number
   timeStep: number
   time: boolean
-  editableEvents: {title: boolean, drag: boolean, resize: boolean, create: boolean}
+  editableEvents: { title: boolean; drag: boolean; resize: boolean; create: boolean }
 }
 
 export default {
@@ -27,7 +34,6 @@ export default {
         monitor: String
         class: String
         icon: String
-        content: String
         contentFull: String
       }>,
       required: true
@@ -37,18 +43,27 @@ export default {
       required: true
     }
   },
-  emits: ["changeFormState"],
-  setup(props, {emit}) {
-    const showForm = ref(false);
-    const onEventClick = (event: any, e: any) => {
-      emit("changeFormState", true);
+  emits: ['changeFormState', 'addEvent'],
+  setup(props, { emit }) {
+    const showForm = ref(false)
+    const onEventClick = (event: Events, e: any) => {
+      emit('changeFormState', true)
     }
-    const createEvent = (event: any, e: any)=> {
-      console.log(event);
-      return true;
+    const createEvent = (event: Events, e: any) => {
+      event.startTimeMinutes = roundEventTime(event.startTimeMinutes)
+      event.endTimeMinutes = roundEventTime(event.endTimeMinutes)
+      console.log(event)
+      emit('addEvent', event)
+      emit('changeFormState', true)
+      return false
     }
 
-    return { ...props,showForm, onEventClick, createEvent }
+    const roundEventTime = (minutes: number) => {
+      let gapNumber = minutes / props.planningConfigs.timeStep
+      gapNumber = Math.round(gapNumber)
+      return gapNumber * props.planningConfigs.timeStep
+    }
+    return { ...props, showForm, onEventClick, createEvent }
   },
   components: { VueCal }
 }
@@ -60,8 +75,7 @@ export default {
         v-bind="planningConfigs"
         :events="calendarEvents"
         :on-event-click="onEventClick"
-        :on-event-create="createEvent"
-        
+        @event-drag-create="createEvent"
       />
     </div>
   </div>
