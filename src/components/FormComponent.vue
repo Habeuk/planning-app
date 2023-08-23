@@ -1,7 +1,7 @@
 <script lang="ts">
 import pButton from 'primevue/button';
 import pDialog from 'primevue/dialog';
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 export default{
     props:{
         showForm: {
@@ -15,13 +15,24 @@ export default{
     },
     emits: ["closeForm", "sendData"],
     setup(props, {emit}){
-        const formState = ref(props.showForm);
+        // const formState = ref(props.showForm);
+        const visible = ref(false)
         const closeForm = ()=>{
             emit("closeForm", false)
         }
+        watch(computed(()=> {return props.showForm}), (newValue)=>{
+            if(visible.value != newValue){
+                visible.value = newValue
+            }
+        })
+        watch(visible, ()=>{
+            if(visible.value ==false ){
+                emit("closeForm", false)
+            }
+        })
         return {
             ...props,
-            formState,
+            visible,
             closeForm
         }
     },
@@ -32,7 +43,7 @@ export default{
 
 <template>
     <div>
-        <pDialog :visible="showForm" modal>
+        <pDialog v-model:visible="visible" modal>
             <p>Hello form</p>
             <template #footer>
                 <pButton label="No" icon="pi pi-times" @click="closeForm" text />

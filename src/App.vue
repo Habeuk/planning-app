@@ -4,7 +4,6 @@ import FormComponent from './components/FormComponent.vue';
 import { usePlanningStore } from './stores/planning'
 
 const store = usePlanningStore()
-console.log(typeof store.planningConfigs.disableViews)
 const changeFormState = (newState =false)=>{
   store.planningConfigs.showForm = newState
 }

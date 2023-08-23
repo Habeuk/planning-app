@@ -50,7 +50,11 @@ export default {
 <template>
   <div>
     <div class="mx-auto vue-cal-container">
-      <VueCal v-bind="planningConfigs" :events="calendarEvents" :on-event-click="onEventClick" />
+      <VueCal
+        v-bind="planningConfigs"
+        :events="calendarEvents"
+        :on-event-click="onEventClick"
+      />
     </div>
   </div>
 </template>
