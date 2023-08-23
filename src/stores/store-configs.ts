@@ -7,5 +7,6 @@ export const PLConfigs = {
   timeFrom: 8 * 60,
   timeTo: 24 * 60,
   timeStep: 60,
-  showForm: false
+  showForm: false,
+  editableEvents: { title: false, drag: true, resize: true, create: true }
 }

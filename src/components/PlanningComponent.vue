@@ -14,6 +14,7 @@ interface Configs {
   timeFrom: number
   timeStep: number
   time: boolean
+  editableEvents: {title: boolean, drag: boolean, resize: boolean, create: boolean}
 }
 
 export default {
@@ -42,7 +43,12 @@ export default {
     const onEventClick = (event: any, e: any) => {
       emit("changeFormState", true);
     }
-    return { ...props,showForm, onEventClick }
+    const createEvent = (event: any, e: any)=> {
+      console.log(event);
+      return true;
+    }
+
+    return { ...props,showForm, onEventClick, createEvent }
   },
   components: { VueCal }
 }
@@ -54,6 +60,8 @@ export default {
         v-bind="planningConfigs"
         :events="calendarEvents"
         :on-event-click="onEventClick"
+        :on-event-create="createEvent"
+        
       />
     </div>
   </div>
