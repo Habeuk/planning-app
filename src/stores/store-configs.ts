@@ -10,5 +10,6 @@ export const PLConfigs = {
   timeTo: 24 * gap,
   timeStep: gap,
   showForm: false,
-  editableEvents: { title: false, drag: true, resize: true, create: true }
+  snapToTime: gap,
+  editableEvents: { title: false, drag: false, resize: true, create: true }
 }

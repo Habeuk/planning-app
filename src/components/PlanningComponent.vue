@@ -1,6 +1,9 @@
 <script lang="ts">
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
+
+//only for update drag
+// import 'vue-cal/dist/drag-and-drop.es'
 import { ref, type PropType } from 'vue'
 
 interface Events {
@@ -35,6 +38,7 @@ export default {
         class: String
         icon: String
         contentFull: String
+        snapToTime: boolean
       }>,
       required: true
     },
@@ -47,17 +51,15 @@ export default {
   setup(props, { emit }) {
     const showForm = ref(false)
     const onEventClick = (event: Events, e: any) => {
+      console.log(event)
       emit('changeFormState', true)
     }
     const createEvent = (event: Events, e: any) => {
-      event.startTimeMinutes = roundEventTime(event.startTimeMinutes)
-      event.endTimeMinutes = roundEventTime(event.endTimeMinutes)
       console.log(event)
-      emit('addEvent', event)
+      // emit('addEvent', event)
       emit('changeFormState', true)
       return false
     }
-
     const roundEventTime = (minutes: number) => {
       let gapNumber = minutes / props.planningConfigs.timeStep
       gapNumber = Math.round(gapNumber)

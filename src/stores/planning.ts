@@ -1,8 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { PLConfigs, eventDuration } from './store-configs'
-import type {Events} from "../components/PlanningComponent.vue"
-
+import type { Events } from '../components/PlanningComponent.vue'
 
 export const usePlanningStore = defineStore('planning', () => {
   const duration = ref(eventDuration)
@@ -15,7 +14,9 @@ export const usePlanningStore = defineStore('planning', () => {
       contentFull:
         'My shopping list is rather long:<br><ul><li>Avocados</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>', // Custom attribute.
       class: 'leisure',
-      monitor: ""
+      monitor: '',
+      user: 'user2',
+      id: 0
     },
     {
       start: '2023-08-24 10:00',
@@ -24,29 +25,33 @@ export const usePlanningStore = defineStore('planning', () => {
       icon: 'golf_course', // Custom attribute.
       contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
       class: 'sport',
-      monitor: ""
+      monitor: '',
+      user: 'user1',
+      id: 1
     }
   ])
   const planningConfigs = ref(PLConfigs)
 
-  const addEvent=(event: Events)=>{
+  const addEvent = (event: Events) => {
     const time = {
-    StartHour: Math.floor(event.startTimeMinutes / 60),
-    EndHour: Math.floor(event.endTimeMinutes / 60),
-    startMinute: event.startTimeMinutes % 60,
-    endMinutes: event.endTimeMinutes % 60
+      StartHour: Math.floor(event.startTimeMinutes / 60),
+      EndHour: Math.floor(event.endTimeMinutes / 60),
+      startMinute: event.startTimeMinutes % 60,
+      endMinutes: event.endTimeMinutes % 60
+    }
+    event.start.setHours(time.StartHour, time.startMinute)
+    event.end.setHours(time.EndHour, time.endMinutes)
+    events.value.push({
+      start: event.start.toString(),
+      end: event.end.toString(),
+      title: 'Custom Event',
+      icon: 'shopping_cart', // Custom attribute.
+      contentFull: 'Damn content',
+      class: 'leisure',
+      monitor: '',
+      user: 'user1',
+      id: 1
+    })
   }
-  event.start.setHours(time.StartHour, time.startMinute)
-  event.end.setHours(time.EndHour, time.endMinutes)
-  events.value.push({
-    start: event.start.toString(),
-    end: event.end.toString(),
-    title: 'Custom Event',
-    icon: 'shopping_cart', // Custom attribute.
-    contentFull: 'Damn content',
-    class: 'leisure',
-    monitor: ''
-  })
-  }
-  return {planningConfigs, events, duration, addEvent }
+  return { planningConfigs, events, duration, addEvent }
 })
