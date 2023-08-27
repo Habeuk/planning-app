@@ -22,7 +22,7 @@ const addEvent = (event: any) => {
       @add-event="addEvent"
     />
     <FormComponent
-      :show-form="store.planningConfigs.showForm"
+      :show-form="false"
       :form-data="{ first: 'hello' }"
       @close-form="changeFormState"
     />

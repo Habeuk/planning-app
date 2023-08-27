@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@stephane888/wbu-atomique": "file:../wbu-atomique",
+    "drupal-vuejs": "file:../drupal-vuejs",
     "pinia": "^2.1.6",
     "primevue": "^3.32.1",
     "vue": "^3.3.4",

@@ -51,7 +51,7 @@ export default {
   setup(props, { emit }) {
     const showForm = ref(false)
     const onEventClick = (event: Events, e: any) => {
-      console.log(event)
+      console.log('onEventClick :: ', event)
       emit('changeFormState', true)
     }
     const createEvent = (event: Events, e: any) => {
@@ -77,6 +77,7 @@ export default {
         v-bind="planningConfigs"
         :events="calendarEvents"
         :on-event-click="onEventClick"
+        min-event-width="50"
         @event-drag-create="createEvent"
       />
     </div>
